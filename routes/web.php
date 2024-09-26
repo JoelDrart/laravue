@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 Route::get('/', [HomeController::class, 'index'] )->name('home');
+Route::get('dashboard', [HomeController::class, 'dashboard'] )->name('dashboard');
 
 
 Route::get('about', [HomeController::class, 'about'] )->name('about');

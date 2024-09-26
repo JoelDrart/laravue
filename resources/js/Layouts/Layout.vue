@@ -11,21 +11,32 @@ import { route } from '../../../vendor/tightenco/ziggy/src/js';
     
     <div class="flex flex-col min-h-screen  ">
         <header class="bg-blue-500 text-white p-4">
-            <nav class="flex space-x-4">
-                <div class="flex-1">
+            <nav class="flex space-x-4 justify-between">
+                <div class="flex">
                     <!-- Primeros dos enlaces -->
-                    <Link :href="route('home')" class="px-2 hover:underline">Inicio</Link>
-                    <Link :href="route('about')" class="px-2 hover:underline">Acerca</Link>
+                    <Link :href="route('home')" class="p-2 rounded-md  mx-2 hover:bg-blue-600" :class="{'bg-blue-800' : $page.component === 'Home'}">Inicio</Link>
+                    <Link :href="route('about')" class="p-2 rounded-md mx-2 hover:bg-blue-600" :class="{'bg-blue-800' : $page.component === 'About'}">Acerca</Link>
                 </div>
                 
                 <!-- Tercer enlace alineado a la derecha -->
-                 <div v-if="$page.props.auth.user" class="flex">
-                    <p class="">Hola, {{ $page.props.auth.user.name }} |</p>
-                    <Link :href="route('logout')" method="post" as="button" type="button" class="px-2 hover:underline ml-auto">Cerrar Sesion</Link>
-                 </div>
-                <div v-else class="">
-                    <Link :href="route('register')" class="px-2 hover:underline ml-auto">Registrate</Link>
-                    <Link :href="route('login')" class="px-2 hover:underline ml-auto">Ingresa</Link>
+                <div v-if="$page.props.auth.user" class="flex">
+                    <img 
+                    class="w-8 h-8 rounded-full mt-auto mb-auto border-2 border-white"
+                    :src="'storage/' + $page.props.auth.user.avatar" 
+                    alt="">
+
+                    <Link 
+                        :href="route('dashboard')" 
+                        class="p-2 rounded-md hover:bg-blue-600  mx-2"
+                        :class="{'bg-blue-800' : $page.component === 'Dashboard'}"
+                    >
+                        Dashboard
+                    </Link>
+                    <Link :href="route('logout')" method="post" as="button" type="button" class="p-2 rounded-md hover:bg-blue-600 ml-auto">Cerrar Sesion</Link>
+                </div>
+                <div v-else class="flex">
+                    <Link :href="route('register')" class="p-2 rounded-md hover:bg-blue-600  mx-2" :class="{'bg-blue-800' : $page.component === 'Auth/Register'}">Registrate</Link>
+                    <Link :href="route('login')" class="p-2 rounded-md hover:bg-blue-600 mx-2" :class="{'bg-blue-800' : $page.component === 'Auth/Login'}">Ingresa</Link>
                 </div>
             </nav>
         </header>
@@ -35,7 +46,7 @@ import { route } from '../../../vendor/tightenco/ziggy/src/js';
             <slot></slot>
         </main>
 
-        <footer class="bg-blue-700 text-white p-4">
+        <footer class="bg-blue-700 text-white p-4 text-center">
             Te amo Gordita, millon de besos 😍😘💕
         </footer>
     </div>

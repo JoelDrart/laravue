@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -14,6 +15,11 @@ class HomeController extends Controller
 
     public function about()
     {
-        return inertia('About');
+        $users = User::all();
+        return inertia('About', ['users' => $users]);
+    }
+
+    public function dashboard(){
+        return inertia('Dashboard');
     }
 }
