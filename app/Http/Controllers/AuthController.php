@@ -46,7 +46,7 @@ class AuthController extends Controller
         Auth::login($user);
 
         //Redirect the user to the home page
-        return redirect()->route('dashboard');
+        return redirect()->route('dashboard')->with('message', 'Bienvenido a la plataforma');
 
         //dd($request);
     }

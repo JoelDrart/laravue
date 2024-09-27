@@ -15,7 +15,7 @@ class HomeController extends Controller
 
     public function about()
     {
-        $users = User::all();
+        $users = User::paginate(5);
         return inertia('About', ['users' => $users]);
     }
 
