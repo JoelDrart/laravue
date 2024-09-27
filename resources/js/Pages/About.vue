@@ -1,9 +1,22 @@
 <script setup>
-import { Head } from '@inertiajs/vue3';
+import { Head, router } from '@inertiajs/vue3';
+import { ref, watch } from 'vue';
+import { debounce } from 'lodash';
 
-defineProps({
-    users: Object
+ const props = defineProps({
+    users: Object,
+    searchTerm: String
 });
+
+const search = ref(props.searchTerm);
+
+// watch(search, (value) => router.get('/about', { search: value }, { preserveState: true }));
+
+watch(search, debounce( 
+    (value) => router.get('/about', { search: value }, { preserveState: true }),
+    500
+)
+);
 
 const getDate = (date) => {
     return new Date(date).toLocaleDateString("es-ES", {
@@ -25,7 +38,17 @@ const getDate = (date) => {
         <br>
     </div>  
     <div class="container mx-auto overflow-x-auto">
-        <table class="min-w-full bg-white rounded-md border border-gray-300 ">
+
+        <div class="flex justify-end mb-4">
+            <div class="w-1/4">
+                <input type="search" placeholder="Buscar" 
+                class="p-2 border-slate-700 border-2 rounded-md shadow-md"
+                v-model="search"
+                >
+            </div>
+        </div>
+
+        <table class="min-w-full bg-white rounded-md border border-gray-300 shadow-md">
             <thead class="bg-gray-50">
                 <tr>
                     <th class="py-2 px-4 rounded-md border-b-2 border-gray-300 text-left text-sm font-semibold text-gray-700">Foto</th>

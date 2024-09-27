@@ -13,10 +13,12 @@ class HomeController extends Controller
         return inertia('Home');
     }
 
-    public function about()
+    public function about(Request $request)
     {
-        $users = User::paginate(5);
-        return inertia('About', ['users' => $users]);
+        $users = User::when($request->search, function($query, $search){
+            return $query->where('name', 'like', '%'.$search.'%');
+        })->paginate(5)->withQueryString();
+        return inertia('About', ['users' => $users, 'searchTerm' => $request->search]);
     }
 
     public function dashboard(){
